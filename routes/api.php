@@ -14,4 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth.basic.once')->get('users', 'App\Http\Controllers\UsersController@index');
+Route::group(['middleware' => 'auth.bearer'], function() {
+    Route::get('users', 'App\Http\Controllers\UsersController@index');
+    Route::post('users/create', 'App\Http\Controllers\UsersController@create');
+    Route::post('users/update/{users}', 'App\Http\Controllers\UsersController@update');
+});

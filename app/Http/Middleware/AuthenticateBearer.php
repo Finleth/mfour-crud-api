@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Auth;
 
 use Response;
 
-class AuthenticateBasic
+class AuthenticateBearer
 {
     /**
-     * Check for a basic authentication token
+     * Check for a bearer authentication token
      * 
-     * Note: This is a super basic authentication system for temporary use.
+     * Note: This uses a hard-coded bearer token from the .env file.
      *       A proper oauth2 would be implemented/database tables added
      *       should this application be built out further.
      *
