@@ -1,62 +1,69 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# MFour CRUD API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+An API built to demonstrate Jeffrey Pau's abilities to write a functioning CRUD API using PHP Laravel.
+## Getting Started
 
-## About Laravel
+To set up a local version of this project, you will first need to fork the repository and download it to your local machine (Note, these instructions assume MySQL has been installed and a database has been created for the project. I used the MAMP MySQL database for my local development).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+After you have done this, from the command line, `cd` into the project's repository and run `composer install`.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Next, set up the `.env` file. Take the `.env.example` file and make a duplicate, renaming the duplicate to `.env`. Within the `.env` file, set the DB_* variables to the appropriate host, database, user, password, and port (if necessary).
+You can also update the API_KEY to any value of your choosing. I left my value in the example file to make the setup faster.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Now that you have the dependencies installed and the database connected, go to your database and run the  `structure.sql` file to get the database set up.
 
-## Learning Laravel
+At this point you can go to your terminal, in the project's root directory, and run the following command:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+php artisan serve
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+This will run the laravel helper `artisan` and spin up a server on localhost:8000 to test this API.
 
-## Laravel Sponsors
+## Basic Usage
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+You can run the following curl commands to check each endpoint and ensure it's working properly:
 
-### Premium Partners
+GET /users
+```
+curl -X GET \
+  http://localhost:8000/api/users \
+  -H 'Authorization: Bearer <API_KEY from .env>' \
+  -H 'Content-Type: application/json' \
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+POST /users/create
+```
+curl -X POST \
+  http://localhost:8000/api/users/create \
+  -H 'Authorization: Bearer <API_KEY from .env>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+	"first_name": "John",
+	"last_name": "Doe",
+	"email": "johndoe@fake.com"
+  }'
+```
 
-## Contributing
+POST /users/update
+```
+curl -X POST \
+  http://localhost:8000/api/users/update/<user_id> \
+  -H 'Authorization: Bearer <API_KEY from .env>' \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -d '{
+    "first_name": "New",
+    "last_name": "Name",
+	"email": "new@email.com"
+  }'
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Notes
 
-## Code of Conduct
+I'd like to mention this was my first time using Laravel and realize this application will have plenty of brute-force implementations. I've personally got a list of areas I'd like to expand on/update to help polish the application:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Exception Handler: Add proper exception handling/JSON responses in the app\Exceptions\Handler.php class
+- Oauth2.0: Set up the oauth/token tables in the database and add the authentication endpoint with scopes
+  - Set up without passpport so I can get a better understanding of Laravel
+- Expand the CRUD operations on the `user` resource

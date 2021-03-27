@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth.bearer'], function() {
-    Route::get('users', 'App\Http\Controllers\UsersController@index');
+    Route::get('users', 'App\Http\Controllers\UsersController@getList');
     Route::post('users/create', 'App\Http\Controllers\UsersController@create');
     Route::post('users/update/{users}', 'App\Http\Controllers\UsersController@update');
 });
