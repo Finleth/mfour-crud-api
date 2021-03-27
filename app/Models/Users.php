@@ -23,12 +23,20 @@ class Users extends Model
      * 
      * @return array $userData
      */
-    static public function validateUser($userData, $requireFields = false)
+    public static function validateUser($userData, $requireFields = false)
     {
         $response = [
             'valid' => true,
             'errors' => []
         ];
+
+        // this case is for validating data for a user update, where all fields are optional but at least one should be supplied
+        if (empty($userData) &&
+            !$requireFields)
+        {
+            $response['valid'] = false;
+            $response['errors'][] = 'No data passed for the user.';
+        }
 
         if (isset($userData['first_name'])) {
             // name regex taken from https://stackoverflow.com/questions/2385701/regular-expression-for-first-and-last-name

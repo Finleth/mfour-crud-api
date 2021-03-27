@@ -25,7 +25,7 @@ class AuthenticateBearer
             return Response::json(['error' => 'No authorization provided.'], 400);
         }
 
-        if ($request->bearerToken() !== config('app.api_key')) {       
+        if ($request->bearerToken() !== config('app.api_key')) {
             return Response::json(['error' => 'Invalid credentials.'], 401);
         }
 
