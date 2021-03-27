@@ -1,6 +1,6 @@
 # MFour CRUD API
 
-An API built to demonstrate Jeffrey Pau's abilities to write a functioning CRUD API using PHP Laravel.
+An API built to demonstrate Jeffrey Pau's abilities to write a functioning CRUD API using PHP Laravel. This application currently implements the three endpoints in the requirements document along with a very (and I mean _very_) basic authentication. See my notes at the bottom for a least of my TODOs on this project.
 ## Getting Started
 
 To set up a local version of this project, you will first need to fork the repository and download it to your local machine (Note, these instructions assume MySQL has been installed and a database has been created for the project. I used the MAMP MySQL database for my local development).
@@ -8,7 +8,7 @@ To set up a local version of this project, you will first need to fork the repos
 After you have done this, from the command line, `cd` into the project's repository and run `composer install`.
 
 Next, set up the `.env` file. Take the `.env.example` file and make a duplicate, renaming the duplicate to `.env`. Within the `.env` file, set the DB_* variables to the appropriate host, database, user, password, and port (if necessary).
-You can also update the API_KEY to any value of your choosing. I left my value in the example file to make the setup faster.
+You can also update the API_KEY to any value of your choosing. I left my value in the example file to make the setup faster (obviously this wouldn't be put into a production application, but I figured it's okay since this application only runs on my local. If I deployed to a server I'd change the API_KEY on the server).
 
 Run the following command to generate the laravel application key:
 
@@ -45,9 +45,9 @@ curl -X POST \
   -H 'Authorization: Bearer <API_KEY from .env>' \
   -H 'Content-Type: application/json' \
   -d '{
-	"first_name": "John",
-	"last_name": "Doe",
-	"email": "johndoe@fake.com"
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "johndoe@fake.com"
   }'
 ```
 
@@ -61,7 +61,7 @@ curl -X POST \
   -d '{
     "first_name": "New",
     "last_name": "Name",
-	"email": "new@email.com"
+    "email": "new@email.com"
   }'
 ```
 
@@ -75,11 +75,13 @@ vendor/bin/phpunit
 
 This will run the test found in `tests/feature/UsersTest.php`.
 
-You should see an OK status on all 5 tests and 8 assertions.
+You should see an OK status on all 5 tests and 8 assertions or else details on which tests failed and the expected/returned results.
+
+Note: These tests don't implement a delete, so the database will be polluted each time the tests are run.
 
 ## Notes
 
-I'd like to mention this was my first time using Laravel and realize this application will have plenty of brute-force implementations. I've personally got a list of areas I'd like to expand on/update to help polish the application:
+This was my first time using Laravel and I realize this application has plenty of brute-force implementations. I've got a list of areas I'd like to expand on/update to help polish the application:
 
 - Oauth2.0: Set up the oauth/token tables in the database and add the authentication endpoint with scopes
   - Set up without passport so I can get a better understanding of Laravel
